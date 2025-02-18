@@ -122,8 +122,8 @@ spec:
       priorityClassName: {{ .Values.priorityClass.name | default (include "nfs-provisioner.fullname" .) | quote }}
       {{- end }}
       volumes:
-      - name: dbus
-        emptyDir: {}
+       - name: dbus
+         emptyDir: {}
       {{- if not .Values.persistence.enabled }}
         - name: data
           emptyDir: {}
