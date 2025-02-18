@@ -34,7 +34,7 @@ spec:
         - name: dbus-metrics
           image: {{ .Values.dbusMetrics.image.repository }}:{{ .Values.dbusMetrics.image.tag }}
           command:
-          - /bin/bush
+          - /bin/bash
           - -c
           - |
             while sleep 1000; do :; done
