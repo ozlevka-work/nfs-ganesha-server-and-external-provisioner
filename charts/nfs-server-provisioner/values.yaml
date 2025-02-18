@@ -126,3 +126,9 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+dbusMetrics:
+  image:
+    repository: ghcr.io/ozlevka-work/ganesha-exporter
+    tag: v0.0.1
+  resources: {}

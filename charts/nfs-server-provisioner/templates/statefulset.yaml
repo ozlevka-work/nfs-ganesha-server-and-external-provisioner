@@ -31,6 +31,18 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
+        - name: dbus-metrics
+          image: {{ .Values.dbusMetrics.image.repository }}:{{ .Values.dbusMetrics.image.tag }}
+          command:
+          - /bin/bush
+          - -c
+          - |
+            while sleep 1000; do :; done
+          resources:
+            {{- toYaml .Values.dbusMetrics.resources | nindent 12 }}
+          volumeMounts:
+            - name: dbus
+              mountPath: /var/run/dbus          
         - name: {{ .Chart.Name }}
           {{- with .Values.image }}
           image: "{{ .repository }}{{ if .digest }}@{{ .digest }}{{ else }}:{{ .tag }}{{ end }}"
