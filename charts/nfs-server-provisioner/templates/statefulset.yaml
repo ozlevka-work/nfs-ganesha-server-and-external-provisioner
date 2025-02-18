@@ -94,6 +94,8 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
           volumeMounts:
+            - name: dbus
+              mountPath: /var/run/dbus
             - name: data
               mountPath: /export
           {{- with .Values.resources }}
@@ -119,16 +121,16 @@ spec:
       {{- if (or .Values.priorityClass.name .Values.priorityClass.create)  }}
       priorityClassName: {{ .Values.priorityClass.name | default (include "nfs-provisioner.fullname" .) | quote }}
       {{- end }}
-
-      {{- if not .Values.persistence.enabled }}
       volumes:
+      - name: dbus
+        emptyDir: {}
+      {{- if not .Values.persistence.enabled }}
         - name: data
           emptyDir: {}
       {{- end }}
 
   {{- if .Values.persistence.enabled }}
   {{- if .Values.persistence.existingClaim }}
-      volumes:
         - name: data
           persistentVolumeClaim:
             claimName: {{ tpl .Values.persistence.existingClaim . }}
